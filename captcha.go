@@ -45,14 +45,9 @@ func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 		if operator == OperationMinus {
 			operatorStr = "-"
 		}
-		if rightoperand == One {
-			rightStr = "one"
-		}
-		if rightoperand == Two {
-			rightStr = "two"
-		}
+
 	}
-	result := leftStr + " " + operatorStr + " " + rightStr
+	result := leftStr + " " + operatorStr + " " + Number(rightoperand)
 	return captcha{
 		str: result,
 	}
@@ -68,4 +63,5 @@ func Number(n int) string {
 	} else if n == 3 {
 		return "three"
 	}
+	return ""
 }
