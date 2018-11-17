@@ -43,10 +43,9 @@ func (c *captcha) String() string {
 
 	if c.pattern == FirstPattern {
 		return leftStr + " " + operators[c.operator] + " " + Number(c.rightOperand)
-	} else {
-		return Number(c.leftOperand) + " " + operators[c.operator] + " " + rightStr
 	}
 
+	return Number(c.leftOperand) + " " + operators[c.operator] + " " + rightStr
 }
 
 func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
