@@ -24,3 +24,11 @@ func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 		str: "1 + one",
 	}
 }
+
+func Number(n int) string {
+<<<<<<< HEAD
+	return "two"
+=======
+	return "one"
+>>>>>>> 70fff1e81d57ddb87a0928de7b59cc2dae758c56
+}
