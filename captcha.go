@@ -44,9 +44,6 @@ func (c *captcha) String() string {
 	if c.operator == OperationMutiply {
 		operatorStr = "x"
 	}
-	if c.operator == OperationDivide {
-		operatorStr = "/"
-	}
 	if c.pattern == FirstPattern {
 		return leftStr + " " + operatorStr + " " + Number(c.rightOperand)
 	} else {
