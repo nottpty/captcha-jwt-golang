@@ -8,6 +8,12 @@ func TestNumberOneAsString(t *testing.T) {
 	}
 }
 
+func TestNumberTwoAsString(t *testing.T) {
+	if Number(2) != "two" {
+		t.Error("it should be two but get", Number(2))
+	}
+}
+
 func TestCaptchaFirstPatternOfOnePlusOne(t *testing.T) {
 	c := Captcha(FirstPattern, 1, OperationPlus, 1)
 	if c.String() != "1 + one" {
