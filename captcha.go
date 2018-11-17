@@ -26,5 +26,6 @@ func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 }
 
 func Number(n int) string {
-	return "one"
+	numString := []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
+	return numString[n]
 }
