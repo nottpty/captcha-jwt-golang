@@ -58,3 +58,26 @@ func TestCaptchaFirstPatternOfTwoPlusOne(t *testing.T) {
 		t.Error("it should be 2 + one but get", c.String())
 	}
 }
+
+func TestCaptchaFirstPattern(t *testing.T) {
+	testCases := []struct {
+		inputPattern  int
+		inputLeft     int
+		inputOperator int
+		inputRight    int
+		expected      string
+	}{
+		{1, 1, 1, 1, "1 + one"},
+		{1, 2, 1, 9, "2 + nine"},
+		{2, 4, 2, 1, "four - 1"},
+		{2, 7, 2, 1, "seven - 1"},
+		{1, 2, 3, 7, "2 x seven"},
+		{2, 2, 3, 9, "two x 9"},
+	}
+	for _, test := range testCases {
+		c := Captcha(test.inputPattern, test.inputLeft, test.inputOperator, test.inputRight)
+		if c.String() != test.expected {
+			t.Errorf("it should be %v but got %v", test.expected, c.String())
+		}
+	}
+}
