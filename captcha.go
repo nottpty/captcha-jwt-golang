@@ -30,7 +30,16 @@ var operators = map[int]string{
 func (c *captcha) String() string {
 	leftStr := strconv.Itoa(c.leftOperand)
 	rightStr := strconv.Itoa(c.rightOperand)
-
+	var operatorStr string
+	if c.operator == OperationPlus {
+		operatorStr = "+"
+	}
+	if c.operator == OperationMinus {
+		operatorStr = "-"
+	}
+	if c.operator == OperationMutiply {
+		operatorStr = "x"
+	}
 	if c.pattern == FirstPattern {
 		return fmt.Sprintf("%s %s %s", leftStr, operators[c.operator], Number(c.rightOperand))
 	}
