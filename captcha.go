@@ -24,25 +24,29 @@ const (
 	OperationPlus = iota + 1
 	OperationMinus
 	OperationMutiply
+	OperationDivide
 )
 
 type captcha struct {
 	pattern, leftOperand, operator, rightOperand int
 }
 
+var operators = map[int]string{
+	1: "+",
+	2: "-",
+	3: "x",
+}
+
 func (c *captcha) String() string {
 	leftStr := strconv.Itoa(c.leftOperand)
-	var operatorStr string
-	if c.pattern == OperationPlus {
-		if c.operator == OperationPlus {
-			operatorStr = "+"
-		}
-		if c.operator == OperationMinus {
-			operatorStr = "-"
-		}
+	rightStr := strconv.Itoa(c.rightOperand)
 
+	if c.pattern == FirstPattern {
+		return leftStr + " " + operators[c.operator] + " " + Number(c.rightOperand)
+	} else {
+		return Number(c.leftOperand) + " " + operators[c.operator] + " " + rightStr
 	}
-	return leftStr + " " + operatorStr + " " + Number(c.rightOperand)
+
 }
 
 func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
