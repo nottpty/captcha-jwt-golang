@@ -14,6 +14,24 @@ func TestNumberTwoAsString(t *testing.T) {
 	}
 }
 
+func TestNumberAsString(t *testing.T) {
+	var flagtest = []struct {
+		intput int
+		output string
+	}{
+		{0, "zero"},
+		{1, "one"},
+		{2, "two"},
+		{2, "three"},
+	}
+	for _, v := range flagtest {
+		r := Number(v.intput)
+		if r != v.output {
+			t.Errorf("Expected %v from %v but got ", v.intput, r)
+		}
+	}
+}
+
 func TestCaptchaFirstPatternOfOnePlusOne(t *testing.T) {
 	c := Captcha(FirstPattern, 1, OperationPlus, 1)
 	if c.String() != "1 + one" {
