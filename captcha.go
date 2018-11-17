@@ -1,6 +1,9 @@
 package captcha
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 const (
 	FirstPattern = iota + 1
@@ -45,7 +48,7 @@ func (c *captcha) String() string {
 		return leftStr + " " + operators[c.operator] + " " + Number(c.rightOperand)
 	}
 
-	return Number(c.leftOperand) + " " + operators[c.operator] + " " + rightStr
+	return fmt.Sprintf("%s %s %s", Number(c.leftOperand), operators[c.operator], rightStr)
 }
 
 func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
