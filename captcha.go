@@ -24,48 +24,44 @@ const (
 	OperationPlus = iota + 1
 	OperationMinus
 	OperationMutiply
+	OperationDivide
 )
 
 type captcha struct {
-	str string
+	pattern, leftOperand, operator, rightOperand int
 }
 
 func (c *captcha) String() string {
-	return c.str
-}
-
-func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
-	leftStr := strconv.Itoa(leftoperand)
-	rightStr := strconv.Itoa(rightoperand)
+	leftStr := strconv.Itoa(c.leftOperand)
+	rightStr := strconv.Itoa(c.rightOperand)
 	var operatorStr string
-	if operator == OperationPlus {
+	if c.operator == OperationPlus {
 		operatorStr = "+"
 	}
-	if operator == OperationMinus {
+	if c.operator == OperationMinus {
 		operatorStr = "-"
 	}
-	if operator == OperationMutiply {
+	if c.operator == OperationMutiply {
 		operatorStr = "x"
 	}
-	if pattern == OperationPlus {
-		if rightoperand == One {
-			rightStr = "one"
-		}
-		if rightoperand == Two {
-			rightStr = "two"
-		}
-		if rightoperand == Two {
-			rightStr = "two"
-		}
-	} else if pattern == SecondPattern {
-		if leftoperand == Three {
-			leftStr = "Three"
-		}
+	if c.operator == OperationDivide {
+		operatorStr = "/"
+	}
+	if c.pattern == FirstPattern {
+		return leftStr + " " + operatorStr + " " + Number(c.rightOperand)
+	} else {
+		return Number(c.leftOperand) + " " + operatorStr + " " + rightStr
 	}
 
-	result := leftStr + " " + operatorStr + " " + rightStr
+}
+
+func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
+
 	return captcha{
-		str: result,
+		pattern:      pattern,
+		leftOperand:  leftOperand,
+		operator:     operator,
+		rightOperand: rightOperand,
 	}
 }
 
