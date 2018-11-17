@@ -22,12 +22,12 @@ func TestNumberAsString(t *testing.T) {
 		{0, "zero"},
 		{1, "one"},
 		{2, "two"},
-		{2, "three"},
+		{3, "three"},
 	}
 	for _, v := range flagtest {
 		r := Number(v.intput)
 		if r != v.output {
-			t.Errorf("Expected %v from %v but got ", v.intput, r)
+			t.Errorf("Expected %v from %v but got %v", v.output, v.intput, r)
 		}
 	}
 }
