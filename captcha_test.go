@@ -38,3 +38,10 @@ func TestCaptchaFirstPatternOfOnePlusOne(t *testing.T) {
 		t.Error("it should be 1 + one but get", c.String())
 	}
 }
+
+func TestCaptchaFirstPatternOfTwoMinusOne(t *testing.T) {
+	c := Captcha(FirstPattern, 2, OperationMinus, 1)
+	if c.String() != "2 - one" {
+		t.Error("it should be 2 - one but get", c.String())
+	}
+}

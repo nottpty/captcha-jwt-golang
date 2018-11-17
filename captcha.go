@@ -1,8 +1,23 @@
 package captcha
 
+import "strconv"
+
 const (
 	FirstPattern = iota + 1
 	SecondPattern
+)
+
+const (
+	Zero = iota
+	One
+	Two
+	Three
+	Four
+	Five
+	Six
+	Seven
+	Eight
+	Nine
 )
 
 const (
@@ -20,12 +35,37 @@ func (c *captcha) String() string {
 }
 
 func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
+	leftStr := strconv.Itoa(leftoperand)
+	rightStr := strconv.Itoa(rightoperand)
+	var operatorStr string
+	if pattern == OperationPlus {
+		if operator == OperationPlus {
+			operatorStr = "+"
+		}
+		if operator == OperationMinus {
+			operatorStr = "-"
+		}
+		if rightoperand == One {
+			rightStr = "one"
+		}
+		if rightoperand == Two {
+			rightStr = "two"
+		}
+	}
+	result := leftStr + " " + operatorStr + " " + rightStr
 	return captcha{
-		str: "1 + one",
+		str: result,
 	}
 }
 
 func Number(n int) string {
-	numString := []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
-	return numString[n]
+	if n == 0 {
+		return "zero"
+	} else if n == 1 {
+		return "one"
+	} else if n == 2 {
+		return "two"
+	} else if n == 3 {
+		return "three"
+	}
 }
