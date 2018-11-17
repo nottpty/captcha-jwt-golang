@@ -36,7 +36,6 @@ func (c *captcha) String() string {
 
 func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 	leftStr := strconv.Itoa(leftoperand)
-	rightStr := strconv.Itoa(rightoperand)
 	var operatorStr string
 	if pattern == OperationPlus {
 		if operator == OperationPlus {
