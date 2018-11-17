@@ -45,7 +45,7 @@ func (c *captcha) String() string {
 	rightStr := strconv.Itoa(c.rightOperand)
 
 	if c.pattern == FirstPattern {
-		return leftStr + " " + operators[c.operator] + " " + Number(c.rightOperand)
+		return fmt.Sprintf("%s %s %s", leftStr, operators[c.operator], Number(c.rightOperand))
 	}
 
 	return fmt.Sprintf("%s %s %s", Number(c.leftOperand), operators[c.operator], rightStr)
