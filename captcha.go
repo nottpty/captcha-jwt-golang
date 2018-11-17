@@ -38,20 +38,31 @@ func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 	leftStr := strconv.Itoa(leftoperand)
 	rightStr := strconv.Itoa(rightoperand)
 	var operatorStr string
+	if operator == OperationPlus {
+		operatorStr = "+"
+	}
+	if operator == OperationMinus {
+		operatorStr = "-"
+	}
+	if operator == OperationMutiply {
+		operatorStr = "x"
+	}
 	if pattern == OperationPlus {
-		if operator == OperationPlus {
-			operatorStr = "+"
-		}
-		if operator == OperationMinus {
-			operatorStr = "-"
-		}
 		if rightoperand == One {
 			rightStr = "one"
 		}
 		if rightoperand == Two {
 			rightStr = "two"
 		}
+		if rightoperand == Two {
+			rightStr = "two"
+		}
+	} else if pattern == SecondPattern {
+		if leftoperand == Three {
+			leftStr = "Three"
+		}
 	}
+
 	result := leftStr + " " + operatorStr + " " + rightStr
 	return captcha{
 		str: result,
