@@ -11,19 +11,6 @@ const (
 )
 
 const (
-	Zero = iota
-	One
-	Two
-	Three
-	Four
-	Five
-	Six
-	Seven
-	Eight
-	Nine
-)
-
-const (
 	OperationPlus = iota + 1
 	OperationMinus
 	OperationMutiply
