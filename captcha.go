@@ -11,8 +11,16 @@ const (
 	OperationMutiply
 )
 
-type captcha struct{}
+type captcha struct {
+	str string
+}
+
+func (c *captcha) String() string {
+	return c.str
+}
 
 func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
-	return captcha{}
+	return captcha{
+		str: "1 + one",
+	}
 }
