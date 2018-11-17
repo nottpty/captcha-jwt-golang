@@ -66,7 +66,7 @@ func TestCaptchaFirstPatternOfTwoPlusOne(t *testing.T) {
 	}
 }
 
-func TestCaptchaFirstPattern(t *testing.T) {
+func TestCaptcha(t *testing.T) {
 	testCases := []struct {
 		inputPattern  int
 		inputLeft     int
