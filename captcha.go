@@ -52,7 +52,7 @@ func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
 			rightStr = "two"
 		}
 	}
-	result := leftStr + " " + operatorStr + " " + rightStr
+	result := leftStr + " " + operatorStr + " " + Number(rightoperand)
 	return captcha{
 		str: result,
 	}
