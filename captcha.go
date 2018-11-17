@@ -27,28 +27,31 @@ const (
 )
 
 type captcha struct {
-	str string
+	pattern, leftOperand, operator, rightOperand int
 }
 
 func (c *captcha) String() string {
-	return c.str
-}
-
-func Captcha(pattern, leftoperand, operator, rightoperand int) captcha {
-	leftStr := strconv.Itoa(leftoperand)
+	leftStr := strconv.Itoa(c.leftOperand)
 	var operatorStr string
-	if pattern == OperationPlus {
-		if operator == OperationPlus {
+	if c.pattern == OperationPlus {
+		if c.operator == OperationPlus {
 			operatorStr = "+"
 		}
-		if operator == OperationMinus {
+		if c.operator == OperationMinus {
 			operatorStr = "-"
 		}
 
 	}
-	result := leftStr + " " + operatorStr + " " + Number(rightoperand)
+	return leftStr + " " + operatorStr + " " + Number(c.rightOperand)
+}
+
+func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
+
 	return captcha{
-		str: result,
+		pattern:      pattern,
+		leftOperand:  leftOperand,
+		operator:     operator,
+		rightOperand: rightOperand,
 	}
 }
 
