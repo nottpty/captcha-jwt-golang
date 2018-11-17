@@ -66,14 +66,6 @@ func Captcha(pattern, leftOperand, operator, rightOperand int) captcha {
 }
 
 func Number(n int) string {
-	if n == 0 {
-		return "zero"
-	} else if n == 1 {
-		return "one"
-	} else if n == 2 {
-		return "two"
-	} else if n == 3 {
-		return "three"
-	}
-	return ""
+	numString := []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
+	return numString[n]
 }
