@@ -31,26 +31,20 @@ type captcha struct {
 	pattern, leftOperand, operator, rightOperand int
 }
 
+var operators = map[int]string{
+	1: "+",
+	2: "-",
+	3: "x",
+}
+
 func (c *captcha) String() string {
 	leftStr := strconv.Itoa(c.leftOperand)
 	rightStr := strconv.Itoa(c.rightOperand)
-	var operatorStr string
-	if c.operator == OperationPlus {
-		operatorStr = "+"
-	}
-	if c.operator == OperationMinus {
-		operatorStr = "-"
-	}
-	if c.operator == OperationMutiply {
-		operatorStr = "x"
-	}
-	if c.operator == OperationDivide {
-		operatorStr = "/"
-	}
+
 	if c.pattern == FirstPattern {
-		return leftStr + " " + operatorStr + " " + Number(c.rightOperand)
+		return leftStr + " " + operators[c.operator] + " " + Number(c.rightOperand)
 	} else {
-		return Number(c.leftOperand) + " " + operatorStr + " " + rightStr
+		return Number(c.leftOperand) + " " + operators[c.operator] + " " + rightStr
 	}
 
 }
