@@ -68,4 +68,5 @@ func Number(n int) string {
 	} else if n == 3 {
 		return "three"
 	}
+	return ""
 }
