@@ -148,7 +148,7 @@ func (validateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func validateToken(w http.ResponseWriter, r *http.Request) bool {
+func validateToken(r *http.Request) bool {
 	token := r.Header.Get("Authorization")
 	secret := "ThisIsMyPassword"
 	algorithm := jwt.HmacSha256(secret)
@@ -175,7 +175,7 @@ func validateToken(w http.ResponseWriter, r *http.Request) bool {
 }
 
 func (createBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if validateToken(w, r) {
+	if validateToken(r) {
 		name := r.Header.Get("name")
 		newAccount := bankaccount.New(name)
 		bankaccount.Save(newAccount)
@@ -185,7 +185,7 @@ func (createBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 }
 
 func (findAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if validateToken(w, r) {
+	if validateToken(r) {
 		name := r.Header.Get("name")
 		account := bankaccount.FindByName(name)
 
@@ -202,7 +202,7 @@ func (findAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (depositBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if validateToken(w, r) {
+	if validateToken(r) {
 		name := r.Header.Get("name")
 		money, err := strconv.Atoi(r.Header.Get("money"))
 		if err != nil {
@@ -217,7 +217,7 @@ func (depositBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Reques
 }
 
 func (withdrawBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if validateToken(w, r) {
+	if validateToken(r) {
 		name := r.Header.Get("name")
 		money, err := strconv.Atoi(r.Header.Get("money"))
 		if err != nil {
@@ -230,13 +230,13 @@ func (withdrawBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
 			return
 		}
 		account.Withdraw(money)
-		balanceStr := strconv.Itoa(account.Balance())
+		balanceStr := "Your balance : " + strconv.Itoa(account.Balance())
 		w.Write([]byte(balanceStr))
 	}
 }
 
 func (balanceBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if validateToken(w, r) {
+	if validateToken(r) {
 		name := r.Header.Get("name")
 		account := bankaccount.FindByName(name)
 		balanceStr := strconv.Itoa(account.Balance())
