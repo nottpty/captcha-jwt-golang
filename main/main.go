@@ -1,11 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/jakkrabig/captcha/bankaccount"
 
 	"github.com/robbert229/jwt"
 
@@ -17,6 +20,16 @@ type apiHandler struct{}
 type tokenHandler struct{}
 
 type validateHandler struct{}
+
+type findAccountHandler struct{}
+
+type createBankAccountHandler struct{}
+
+type depositBankAccountHandler struct{}
+
+type withdrawBankAccountHandler struct{}
+
+type balanceBankAccountHandler struct{}
 
 func (apiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	p := r.URL.Path
@@ -135,12 +148,113 @@ func (validateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func validateToken(w http.ResponseWriter, r *http.Request) bool {
+	token := r.Header.Get("Authorization")
+	secret := "ThisIsMyPassword"
+	algorithm := jwt.HmacSha256(secret)
+
+	loadedClaims, err := algorithm.Decode(token)
+	if err != nil {
+		panic(err)
+	}
+
+	role, err := loadedClaims.Get("Role")
+	if err != nil {
+		panic(err)
+	}
+
+	roleString, ok := role.(string)
+	if !ok {
+		panic(err)
+	}
+
+	if strings.Compare(roleString, "Admin") == 0 {
+		return true
+	}
+	return false
+}
+
+func (createBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if validateToken(w, r) {
+		name := r.Header.Get("name")
+		newAccount := bankaccount.New(name)
+		bankaccount.Save(newAccount)
+		w.Write([]byte("Create an account Successful"))
+	}
+
+}
+
+func (findAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if validateToken(w, r) {
+		name := r.Header.Get("name")
+		account := bankaccount.FindByName(name)
+
+		byteUser, err := json.Marshal(&account)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("users: %s", err), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, "%s", byteUser)
+	}
+
+}
+
+func (depositBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if validateToken(w, r) {
+		name := r.Header.Get("name")
+		money, err := strconv.Atoi(r.Header.Get("money"))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("users: %s", err), http.StatusInternalServerError)
+			return
+		}
+		account := bankaccount.FindByName(name)
+		account.Deposit(money)
+		balanceStr := strconv.Itoa(account.Balance())
+		w.Write([]byte(balanceStr))
+	}
+}
+
+func (withdrawBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if validateToken(w, r) {
+		name := r.Header.Get("name")
+		money, err := strconv.Atoi(r.Header.Get("money"))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("users: %s", err), http.StatusInternalServerError)
+			return
+		}
+		account := bankaccount.FindByName(name)
+		if money > account.Balance() {
+			w.Write([]byte("Not enough money"))
+			return
+		}
+		account.Withdraw(money)
+		balanceStr := strconv.Itoa(account.Balance())
+		w.Write([]byte(balanceStr))
+	}
+}
+
+func (balanceBankAccountHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if validateToken(w, r) {
+		name := r.Header.Get("name")
+		account := bankaccount.FindByName(name)
+		balanceStr := strconv.Itoa(account.Balance())
+		w.Write([]byte(balanceStr))
+	}
+}
+
 func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("/captcha/", apiHandler{})
 	mux.Handle("/tokens/", tokenHandler{})
 	mux.Handle("/login/", validateHandler{})
+	mux.Handle("/bank/account/create", createBankAccountHandler{})
+	mux.Handle("/bank/account/deposit", depositBankAccountHandler{})
+	mux.Handle("/bank/account/withdraw", withdrawBankAccountHandler{})
+	mux.Handle("/bank/account/balance", balanceBankAccountHandler{})
+	mux.Handle("/bank/account/", findAccountHandler{})
 	mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		if req.URL.Path != "/" {
 			http.NotFound(w, req)

@@ -1,51 +1,51 @@
-package backaccount
+package bankaccount
 
 import "testing"
 
 func TestNewAccount(t *testing.T) {
 	newAccount := New("Papaya")
 	tempAccount := Account{
-		id:      1,
-		name:    "Papaya",
-		balance: 0,
+		ID:           1,
+		Name:         "Papaya",
+		BalanceMoney: 0,
 	}
-	if newAccount.id != tempAccount.id {
-		t.Errorf("expect %d got %d", newAccount.id, tempAccount.id)
+	if newAccount.ID != tempAccount.ID {
+		t.Errorf("expect %d got %d", newAccount.ID, tempAccount.ID)
 	}
-	if newAccount.name != tempAccount.name {
-		t.Errorf("expect %s got %s", newAccount.name, tempAccount.name)
+	if newAccount.Name != tempAccount.Name {
+		t.Errorf("expect %s got %s", newAccount.Name, tempAccount.Name)
 	}
-	if newAccount.balance != tempAccount.balance {
-		t.Errorf("expect %d got %d", newAccount.balance, tempAccount.balance)
+	if newAccount.BalanceMoney != tempAccount.BalanceMoney {
+		t.Errorf("expect %d got %d", newAccount.BalanceMoney, tempAccount.BalanceMoney)
 	}
 }
 
 func TestSaveAccount(t *testing.T) {
 	account := New("Alien")
 	newData := &Account{
-		id:      1,
-		name:    "Hellen",
-		balance: 2300,
+		ID:           1,
+		Name:         "Hellen",
+		BalanceMoney: 2300,
 	}
 	Save(account)
-	if account.id != 1 {
-		t.Errorf("expect 1 got %d", account.id)
+	if account.ID != 1 {
+		t.Errorf("expect 1 got %d", account.ID)
 	}
-	if account.name != "Alien" {
-		t.Errorf("expect Alien got %s", account.name)
+	if account.Name != "Alien" {
+		t.Errorf("expect Alien got %s", account.Name)
 	}
-	if account.balance != 0 {
-		t.Errorf("expect 0 got %d", account.balance)
+	if account.BalanceMoney != 0 {
+		t.Errorf("expect 0 got %d", account.BalanceMoney)
 	}
 	Save(newData)
-	if account.id != 1 {
-		t.Errorf("expect 1 got %d", account.id)
+	if account.ID != 1 {
+		t.Errorf("expect 1 got %d", account.ID)
 	}
-	if account.name != "Hellen" {
-		t.Errorf("expect Hellen got %s", account.name)
+	if account.Name != "Hellen" {
+		t.Errorf("expect Hellen got %s", account.Name)
 	}
-	if account.balance != 2300 {
-		t.Errorf("expect 2300 got %d", account.balance)
+	if account.BalanceMoney != 2300 {
+		t.Errorf("expect 2300 got %d", account.BalanceMoney)
 	}
 }
 
@@ -54,25 +54,25 @@ func TestFindAccountByName(t *testing.T) {
 		account := New("Alien")
 		Save(account)
 		findAccount1 := FindByName("Alien")
-		if findAccount1.id != 1 {
-			t.Errorf("expect 1 got %d", findAccount1.id)
+		if findAccount1.ID != 1 {
+			t.Errorf("expect 1 got %d", findAccount1.ID)
 		}
-		if findAccount1.name != "Alien" {
-			t.Errorf("expect Alien got %s", findAccount1.name)
+		if findAccount1.Name != "Alien" {
+			t.Errorf("expect Alien got %s", findAccount1.Name)
 		}
-		if findAccount1.balance != 0 {
-			t.Errorf("expect 0 got %d", findAccount1.balance)
+		if findAccount1.BalanceMoney != 0 {
+			t.Errorf("expect 0 got %d", findAccount1.BalanceMoney)
 		}
 	} else {
 		findAccount1 := FindByName("Hellen")
-		if findAccount1.id != 1 {
-			t.Errorf("expect 1 got %d", findAccount1.id)
+		if findAccount1.ID != 1 {
+			t.Errorf("expect 1 got %d", findAccount1.ID)
 		}
-		if findAccount1.name != "Hellen" {
-			t.Errorf("expect Hellen got %s", findAccount1.name)
+		if findAccount1.Name != "Hellen" {
+			t.Errorf("expect Hellen got %s", findAccount1.Name)
 		}
-		if findAccount1.balance != 2300 {
-			t.Errorf("expect 2300 got %d", findAccount1.balance)
+		if findAccount1.BalanceMoney != 2300 {
+			t.Errorf("expect 2300 got %d", findAccount1.BalanceMoney)
 		}
 	}
 

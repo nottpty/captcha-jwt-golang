@@ -1,4 +1,4 @@
-package backaccount
+package bankaccount
 
 import "testing"
 
@@ -27,9 +27,9 @@ func TestDeposit(t *testing.T) {
 
 func getTempAccount() Account {
 	account := Account{
-		id:      0,
-		name:    "nameTest",
-		balance: 3000,
+		ID:           0,
+		Name:         "nameTest",
+		BalanceMoney: 3000,
 	}
 	return account
 }

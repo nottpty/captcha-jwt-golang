@@ -1,4 +1,4 @@
-package backaccount
+package bankaccount
 
 var bankAccount []*Account
 var id int
@@ -11,9 +11,9 @@ func init() {
 // New use for create bank account
 func New(name string) *Account {
 	tempAccount := &Account{
-		id:      id,
-		name:    name,
-		balance: 0,
+		ID:           id,
+		Name:         name,
+		BalanceMoney: 0,
 	}
 
 	return tempAccount
@@ -22,9 +22,9 @@ func New(name string) *Account {
 // Save if not found id of account in local storage or update if found id of account in local storage
 func Save(account *Account) {
 	for _, tempAccount := range bankAccount {
-		if tempAccount.id == account.id {
-			tempAccount.name = account.name
-			tempAccount.balance = account.balance
+		if tempAccount.ID == account.ID {
+			tempAccount.Name = account.Name
+			tempAccount.BalanceMoney = account.BalanceMoney
 			return
 		}
 	}
@@ -35,7 +35,7 @@ func Save(account *Account) {
 // FindByName use for find account by using name of account
 func FindByName(name string) *Account {
 	for _, account := range bankAccount {
-		if account.name == name {
+		if account.Name == name {
 			return account
 		}
 	}
